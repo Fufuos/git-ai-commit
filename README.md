@@ -9,48 +9,39 @@ The model receives the staged file list, requests the staged diffs it needs, and
 ## Setup
 
 ```bash
-go install https://github.com/Fufuos/git-ai-commit
-ai-commit setup
+go install github.com/Fufuos/git-ai-commit@latest
+export OPENAI_API_KEY="your-api-key"
 ```
 
-- Select your AI provider
-- Configure your API key
-- Automatically fetch and select from available models (if supported)
-- Choose your message format [`plan`, `conventional`, `conventional+body`, `subject+body`]
+The CLI uses `gpt-4o-mini` by default and generates a Conventional Commit subject.
+To use another OpenAI-compatible endpoint or model, set `OPENAI_BASE_URL` and
+`OPENAI_MODEL` as shown below. The staged diff is sent to that endpoint for
+generation.
 
-Supported providers:
-
-- OpenAI
-- Groq
-- OpenRouter
-- Ollama (local)
-- Gemini
-
-All configurations is kept in `.aicommit` in your `~/home` directory
+Configuration is read from environment variables; API keys are not written to disk.
 
 ## Usage
 
 ```
 git add <files>
-git ai-commit # or aic or gaic
+git ai-commit
 ```
 
-can be used natively as a git subcommand with the `git-` prefix.
+Review the generated subject and confirm to create the commit. Use `--dry-run` to
+print the subject without committing, `--yes` to skip confirmation, `--all` to
+stage tracked changes first, or `--hint "focus on error handling"` to guide the
+message. It can also be used as a Git subcommand with the `git-` prefix.
 
 ## Environment Variables
 
 ```bash
 export OPENAI_API_KEY="sk-..."
 export OPENAI_BASE_URL="https://api.example.com"
-export OPENAI_MODEL="gpt-4"
+export OPENAI_MODEL="gpt-4o-mini"
 ```
 
-Configuration precedence:
-
-- Command-line arguments
-- Environment variables
-- Configuration file
-- Default values
+`OPENAI_BASE_URL` may be a provider's API base URL (for example,
+`https://api.openai.com/v1`) or a full `/chat/completions` endpoint URL.
 
 ## Configuration
 
