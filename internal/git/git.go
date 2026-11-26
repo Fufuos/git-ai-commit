@@ -46,10 +46,6 @@ func (r *Repo) StageTrackedChanges(ctx context.Context) error {
 	return nil
 }
 
-func (d DiffContext) IsEmpty() bool {
-	return strings.TrimSpace(d.RawDiff) == ""
-}
-
 func (r *Repo) Commit(ctx context.Context, message string) error {
 	cmd := exec.CommandContext(ctx, "git", "commit", "-m", message)
 	out, err := cmd.CombinedOutput()
