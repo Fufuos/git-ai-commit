@@ -18,7 +18,9 @@ To use another OpenAI-compatible endpoint or model, set `OPENAI_BASE_URL` and
 `OPENAI_MODEL` as shown below. The staged diff is sent to that endpoint for
 generation.
 
-Configuration is read from environment variables; API keys are not written to disk.
+Configuration is read from exported environment variables and a `.env` file in
+the directory where the command is run. Exported variables take precedence.
+Keep `.env` local; the repository ignores it so API keys are not committed.
 
 ## Usage
 
